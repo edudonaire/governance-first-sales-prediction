@@ -205,3 +205,29 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# ========================================
+# Data Science / Analytics files
+# ========================================
+
+# Raw and processed datasets
+data/**/*.csv
+data/**/*.parquet
+data/**/*.xlsx
+data/**/*.json
+
+# Model artifacts
+models/
+*.pkl
+*.joblib
+*.onnx
+
+# Power BI / BI files
+*.pbix
+*.pbit
+
+# Temporary analysis files
+tmp/
+temp/
+
