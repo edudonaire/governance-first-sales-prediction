@@ -231,3 +231,11 @@ models/
 tmp/
 temp/
 
+# macOS
+.DS_Store
+**/.DS_Store
+
+# local env / conda
+anaconda_projects/
+
+
