@@ -1,95 +1,221 @@
-# Governance-First Sales Prediction
+README.md (Cole tudo)
+# 📈 Governance-First Sales Prediction
 
-End-to-end predictive analytics project applying a governance-first architecture (Bronze, Silver, Gold layers) to forecast retail sales.
+End-to-end machine learning pipeline for retail sales forecasting with a governance-first approach, focusing on data quality, leakage prevention, explainability, and reproducibility.
 
----
-
-## 🎯 Objectives
-
-- Design a scalable data pipeline  
-- Apply data quality and governance principles  
-- Build a predictive sales model  
-- Generate business-ready insights  
-- Demonstrate analytics engineering best practices  
+This project uses the Rossmann Store Sales dataset to build, validate, and explain a Random Forest forecasting model.
 
 ---
 
-## 🏗 Architecture
+## 🚀 Project Objectives
 
-Bronze (Raw Data) → Silver (Cleaned Data) → Gold (Features) → ML Model → Dashboard
-
----
-
-## 🧰 Tech Stack
-
-- Python  
-- Pandas, NumPy  
-- Scikit-learn  
-- Jupyter Notebook  
-- Power BI / Plotly  
-- GitHub  
+- Build a robust sales prediction pipeline
+- Prevent data leakage
+- Apply hyperparameter tuning
+- Implement explainability techniques
+- Ensure reproducibility and governance standards
 
 ---
 
-## 📂 Project Structure
+## 🗂 Project Structure
 
-```text
-data/
-├── bronze/
-├── silver/
-└── gold/
 
-notebooks/
-src/
-dashboard/
-``` 
+
+governance-first-sales-prediction/
+│
+├── data/
+│ ├── bronze/ # Raw data
+│ ├── silver/ # Cleaned data
+│ └── gold/ # Feature-engineered datasets
+│
+├── notebooks/
+│ ├── 01_ingestion.ipynb
+│ ├── 02_cleaning.ipynb
+│ ├── 03_feature_engineering.ipynb
+│ ├── 04_modeling.ipynb
+│ ├── 05_evaluation.ipynb
+│ ├── 06_benchmark.ipynb
+│ ├── 07_tuning.ipynb
+│ └── 08_explainability.ipynb
+│
+├── models/
+│ └── random_forest_tuned.joblib
+│
+├── reports/
+│ ├── figures/
+│ └── metrics/
+│
+└── README.md
+
+
 ---
 
 ## 📊 Dataset
 
-This project uses the Rossmann Store Sales dataset from Kaggle.
+**Source:** Rossmann Store Sales (Kaggle)
 
-Due to file size constraints, datasets are not stored in this repository.
+Features include:
 
-Link: https://www.kaggle.com/c/rossmann-store-sales
+- Store information
+- Promotions
+- Competition distance
+- Calendar features
+- Holiday indicators
 
----
+Target:
 
-## ▶️ How to Reproduce
-
-1. Download the dataset from Kaggle  
-2. Place the files in:
-
-```data/bronze/
-├── train.csv
-└── store.csv
-```
-
-3. Run the notebooks in numerical order
+- `Sales`
 
 ---
 
-## ⚙️ Pipeline
+## ⚙️ Methodology
 
-1. Ingestion  
-2. Cleaning  
-3. Feature Engineering  
-4. Modeling  
-5. Evaluation  
-6. Visualization  
+### 1. Data Pipeline
+
+- Bronze → Silver → Gold architecture
+- Missing value handling
+- Categorical encoding
+- Date feature engineering
+- Feature normalization
+
+### 2. Modeling
+
+Models evaluated:
+
+- Baseline (Dummy Regressor)
+- Linear Regression
+- Random Forest (Baseline)
+- Random Forest (Tuned)
+
+Validation:
+
+- Train/Test split with temporal awareness
+- Cross-validation during tuning
+
+### 3. Hyperparameter Tuning
+
+Technique:
+
+- RandomizedSearchCV
+- 3–5 fold cross-validation
+- RMSE optimization
+
+Key parameters tuned:
+
+- n_estimators
+- max_depth
+- min_samples_leaf
+- max_features
 
 ---
 
-## 📈 Expected Outcomes
+## 🔍 Data Leakage Validation
 
-- Reliable forecasting  
-- Governed data layers  
-- Scalable analytics architecture  
-- Executive-level insights  
+A dedicated leakage audit was performed.
+
+The `Customers` variable is highly correlated with `Sales` and acts as a proxy for the target.
+
+Two models were compared:
+
+- With `Customers`
+- Without `Customers`
+
+Performance degradation after removal confirms leakage.
 
 ---
 
-## 👤 Author
+## 📈 Results
 
-Eduardo Donaire  
-BI & Analytics | Data Governance | Predictive Analytics
+| Model                    | MAE    | RMSE    | Leakage-Free |
+|--------------------------|--------|---------|--------------|
+| RandomForest Baseline    | 261    | 439     | ❌ No        |
+| RandomForest Tuned       | 312.86 | 514.48  | ❌ No        |
+| RandomForest NoCustomers | 680.70 | 1112.08 | ✅ Yes       |
+
+Key insight:
+
+> Removing customer-related leakage more than doubled the error, proving the original models were benefiting from indirect target information.
+
+The final production-ready model is the leakage-free version.
+
+---
+
+## 🧠 Explainability
+
+Explainability methods:
+
+### 1. Permutation Importance
+
+- Identifies impact of each feature on prediction accuracy
+- Used as main explainability method
+
+Top drivers:
+
+- Promotions
+- Competition Distance
+- Calendar Effects
+- Store Attributes
+
+Saved in:
+
+
+
+reports/figures/permutation_importance_top20.png
+
+
+### 2. SHAP (Experimental)
+
+SHAP was tested but limited by environment compatibility and memory constraints for 1M+ records.
+
+Permutation importance was selected for stability and scalability.
+
+---
+
+## 🏛 Governance Principles Applied
+
+- Data lineage (Bronze/Silver/Gold)
+- Leakage detection
+- Reproducible pipelines
+- Model versioning
+- Metrics tracking
+- Explainability documentation
+
+This project prioritizes reliability over raw performance.
+
+---
+
+## 🧪 Reproducibility
+
+Environment:
+
+- Python 3.12
+- pandas
+- scikit-learn
+- numpy
+- joblib
+
+To reproduce:
+
+```bash
+pip install -r requirements.txt
+
+
+Run notebooks in order:
+
+01 → 08
+
+📌 Key Takeaways
+
+Leakage prevention is critical in forecasting
+
+Governance improves long-term model reliability
+
+Explainability enables stakeholder trust
+
+Proper validation reduces deployment risk
+
+📬 Author
+
+Eduardo Donaire Filho
+Business Intelligence & Data Analytics Leader
+Focus: Decision Intelligence, Governance, ML Systems

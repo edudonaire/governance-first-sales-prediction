@@ -1,0 +1,4 @@
+model,mae,rmse,leakage_validated,notes
+RandomForest_Baseline,261,439,No,Includes Customers (leakage proxy)
+RandomForest_Tuned,312.86,514.48,No,Tuned but still uses Customers
+RandomForest_NoCustomers,680.7,1112.08,Yes,Leakage-free production model

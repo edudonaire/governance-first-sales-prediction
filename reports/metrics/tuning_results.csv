@@ -1,0 +1,2 @@
+model,mae,rmse,best_params,n_features,n_train,n_test
+RandomForest_Tuned,312.8663452627772,514.4791848342323,"{'bootstrap': True, 'max_depth': 18, 'max_features': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 188}",34,813767,203442
